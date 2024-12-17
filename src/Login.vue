@@ -1,142 +1,147 @@
 <template>
     <div class="container-principal">
         <div class="card">
-            <img src="../src/assets/carro.avif" class="card-img-top" alt="...">
+            <img src="../src/assets/carro.avif" class="card-img-top" alt="Imagem de Login">
             <div class="card-body">
-                <h5 class="card-title">Login</h5>
-                <form @submit="cadastroUsuario" class="row">
-                        <label for="email" class="text-center">Email</label>
-                        <input class="col-10 m-auto text-center rounded-2" name="email" id="email" type="text" required>
-                        <br><br>
-                        <label for="senha" class="text-center">Senha</label>
-                        <input class="col-10 m-auto text-center rounded-2" name="senha" id="senha" type="password" required>
-                        <br><br>
-                        <button class="col-10 m-auto text-center rounded-2" type="submit">Enviar</button>
-                    </form>
-            </div> 
+                <h5 class="card-title text-center">Login</h5>
+                <form @submit="cadastroUsuario" class="form-login">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input v-model="email" type="email" id="email" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="senha" class="form-label">Senha</label>
+                        <input v-model="senha" type="password" id="senha" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Enviar</button>
+                </form>
+            </div>
         </div>
     </div>
 </template>
 
-
-<script scoped>
-
+<script setup>
+import { ref } from 'vue';
 import CryptoJS from 'crypto-js';
 import { useRouter } from 'vue-router';
 import endPoints from '../src/config';
 
+const router = useRouter();
+const email = ref('');
+const senha = ref('');
 
-export default {
-    name: 'MyComponent',
+// Função para encriptar a senha
+const hashPassword = (senha) => {
+    return CryptoJS.MD5(senha).toString();
+};
 
-    setup(){
-        const router = useRouter(); // Obtém a instância do router
+// Função para codificar o básico (base64)
+const hashBasic64 = (data) => {
+    return btoa(data);
+};
 
-        const hashPassword = (senha) => {
-            return CryptoJS.MD5(senha).toString();
-        };
-
-        const hashBasic64 = (data) => {
-            return btoa(data);
-        };
-        
-        const cadastroUsuario = (e) => {
-            e.preventDefault();
-            // const urlLogin = 'http//192.168.70.240:9000/login';
-            let email = document.getElementById("email").value;
-            let senha = hashPassword(document.getElementById("senha").value);
-            let basicAuth = 'basic '+ hashBasic64(email+':'+senha);
-            console.log(basicAuth);
-            fetch(endPoints.postLogin, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization':basicAuth
-            },
-            body: JSON.stringify({ username: email, password: senha }),
-            //credentials: 'include'  // Inclui cookies ou outros mecanismos de autenticação
-            })
-            .then(response => response.json())
-            .then(data  => {
-            if ( data.status) {
-               // console.log(data.dados);
-                localStorage.setItem('dados', JSON.stringify(data.dados));
-                router.push({ name: 'Home' }); // Redireciona para Home
-                // alert('passei do routes');
-            } else {
-                alert('Login falhou')
-                router.replace({ name: 'Login' });
-                console.error('Login falhou', data.message);
-            }
-        })
-            //.then(data => console.log(data))
-            .catch(error => console.error('Erro:', error));
-        };
-
-        return {
-            cadastroUsuario,
-        };
-    }
+// Função para cadastro do usuário
+const cadastroUsuario = (e) => {
+    e.preventDefault();
     
+    let hashedPassword = hashPassword(senha.value);
+    let basicAuth = 'basic ' + hashBasic64(`${email.value}:${hashedPassword}`);
     
-}
-   
+    fetch(endPoints.postLogin, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': basicAuth
+        },
+        body: JSON.stringify({ username: email.value, password: hashedPassword })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status) {
+            localStorage.setItem('dados', JSON.stringify(data.dados));
+            router.push({ name: 'Home' });
+        } else {
+            alert('Login falhou');
+            router.replace({ name: 'Login' });
+            console.error('Login falhou', data.message);
+        }
+    })
+    .catch(error => console.error('Erro:', error));
+};
 </script>
-
 
 <style scoped>
 .container-principal {
-    background-color: black;
+    background-color: #000;
+    background-image: url('../src/assets/carro.avif');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     height: 100vh;
     display: flex;
+    justify-content: center;
     align-items: center;
-    
 }
 
- .card {
-    margin-left: 40%;  
-    border: 2px solid;
-    border-color:  #f8f8f8; 
+.card {
+    width: 100%;
+    max-width: 400px;
+    border: 2px solid #f8f8f8;
     border-radius: 4px;
-    box-shadow: 0 4px 8px #ff7200; /* sombra nas mensagem */
+    box-shadow: 0 4px 8px rgba(255, 114, 0, 0.8); /* sombra destacada */
+    background-color: rgb(15, 14, 14);
 }
-.divformulario {
-    
-    margin-left: 30px;
-    margin-top: 50%;
-    width: 250px;
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+    border-radius: 4px 4px 0 0;
+}
+
+.card-body {
+    padding: 20px;
+    color: white;
+}
+
+.card-title {
+    color: #ff7200;
+}
+
+.form-login .form-label {
+    color: #fff;
+    font-weight: bold;
+}
+
+.form-login .form-control {
+    background-color: #333;
+    border: 1px solid #555;
+    color: white;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.form-login .form-control:focus {
+    border-color: #ff7200;
+    box-shadow: 0 0 5px rgba(255, 114, 0, 0.7);
 }
 
 .btn-primary {
-    margin-top: 20px;
-}
-
-.card-img-top{
-    height: 200px;
-    width: 350px;
-}
-.card-body{
+    background-color: #ff7200;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 4px;
     color: white;
-    background-color: rgb(15, 14, 14);
-    height: 280px;
-    width: 350px;
-    border-radius: 0 0 4px 4px;
-    
-}
-.btn-outline-primary{
-    color: black;
-    background-color: aliceblue;
-    margin-top: 20px;
-    height: 50px;
-    width: 100px;
-    margin-left: 34%;
 }
 
+.btn-primary:hover {
+    background-color: #e15b00;
+}
 
-
-
-
+@media (max-width: 768px) {
+    .card {
+        width: 90%;
+    }
+}
 </style>
