@@ -2,6 +2,10 @@ o projeto seria para atendimento ao cliente mas apenas a parte do front-end, e t
 na parte onde voce atende o cliente aparece os tickets antigos do cliente,e a a criacao de um novo ticket para o mesmo, e o encerrar que voce preenche algumas informacoes daquele ticket e remove o cliente da lista de conversas.
 no canto superior esquerdo mostra os contatos salvos e a fila de espera que apos click no cliente ele sai da fila e vai para a conversas.
 
+**   Login  **
+
+a parte do login ja esta feita faltando o back-end com o banco para salva, mas ja tem o token JWt e só é possivel usa se estiver logado, apos logado aparecera o nome e a foto do atendente no canto inferiror direito 
+
 
 # atendimento
 
