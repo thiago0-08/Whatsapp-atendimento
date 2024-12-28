@@ -118,10 +118,10 @@
 </template>
 
 <script setup>
-import MesComponent from '@/components/graficosComponents/MesComponent.vue';
-import DiaComponent from '@/components/graficosComponents/DiaComponent.vue';
-import ChartComponent from '@/components/graficosComponents/ChartComponent.vue';
-import PieCompomnent from '@/components/graficosComponents/PieCompomnent.vue';
+import MesComponent from '@/components/graficos_PG_Home/MesComponent.vue';
+import DiaComponent from '@/components/graficos_PG_Home/DiaComponent.vue';
+import ChartComponent from '@/components/graficos_PG_Home/ChartComponent.vue';
+import PieCompomnent from '@/components/graficos_PG_Home/PieCompomnent.vue';
 
 const revenueData = [
   { title: 'Total Revenue', value: '$1234', icon: 'bi bi-cash-coin' },

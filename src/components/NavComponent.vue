@@ -21,6 +21,12 @@
             <label>WhatsApp</label>
           </li>
         </RouterLink>
+        <RouterLink class="nav-link" to="Dados_Logistica" active-class="active">
+          <li>
+            <i class="bi bi-truck"></i>
+            <label>Dados de Entrega </label>
+          </li>
+        </RouterLink>
 
         <RouterLink class="nav-link" to="/login" active-class="active">
           <li>

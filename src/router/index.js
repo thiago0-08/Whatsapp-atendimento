@@ -4,6 +4,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/HomeView.vue"; 
 import Login from "../Login.vue";
 import WhatsApp from "../views/WhatsApp.vue";
+import Dados_Logistica from "@/views/Dados_Entragas.vue";
 import endpoints from "../config";
 
 const routes = [
@@ -17,6 +18,12 @@ const routes = [
         path: '/WhatsApp', 
         name: 'WhatsApp',
         component: WhatsApp,
+        // meta: { requiresAuth: true} , 
+    },
+    {
+        path: '/Dados_Logistica', 
+        name: 'Dados_Logistica',
+        component: Dados_Logistica,
         // meta: { requiresAuth: true} , 
     },
     {
