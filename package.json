@@ -21,6 +21,14 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.5",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.1.4",
     "vite": "^5.3.1"
-  }
+  },
+  "description": "video do APP no linkedin\r https://www.linkedin.com/posts/thiago-silverio-pereira-262a0b214_meu-projeto-de-front-end-sobre-um-app-para-activity-7276332968023855104-4nzR?utm_source=share&utm_medium=member_desktop",
+  "main": "vite.config.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
