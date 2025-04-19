@@ -3,7 +3,7 @@ import App from './App.vue';
 import router from './router';
 import { VTooltip } from 'v-tooltip';
 import apiClient from '@/views/api';
-
+import './assets/main.css'
 
 
 
